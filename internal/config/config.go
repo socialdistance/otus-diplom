@@ -2,17 +2,21 @@ package config
 
 import (
 	"fmt"
-	"gopkg.in/yaml.v3"
+	yaml3 "gopkg.in/yaml.v3"
 	"os"
 )
 
 type Config struct {
-	GRPC GRPCConf
+	Stats StatsConfig
 }
 
-type GRPCConf struct {
-	Host string
-	Port string
+type StatsConfig struct {
+	LoadAvg bool
+	CPU     bool
+	Disk    bool
+	Memory  bool
+	// NetTop  bool
+	// NetStat bool
 }
 
 func NewConfig() Config {
@@ -26,7 +30,7 @@ func LoadConfig(path string) (*Config, error) {
 	}
 
 	config := NewConfig()
-	err = yaml.Unmarshal(result, &config)
+	err = yaml3.Unmarshal(result, &config)
 	if err != nil {
 		return nil, fmt.Errorf("cant unmarshal config: %w", err)
 	}

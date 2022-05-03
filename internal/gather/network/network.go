@@ -18,7 +18,7 @@ type Stats struct {
 }
 
 func Get() ([]Stats, error) {
-	//netstat -anv -p tcp -> -p tcp dont work ?
+	// netstat -anv -p tcp -> -p tcp dont work ?
 	cmd := exec.Command("netstat", "-anv")
 	var out io.Reader
 	stdout, err := cmd.StdoutPipe()

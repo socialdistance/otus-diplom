@@ -15,13 +15,13 @@ var n, m int
 func init() {
 	flag.StringVar(&port, "port", ":50051", "Listen port")
 	flag.IntVar(&n, "n", 5, "interval to get statistic (sec)")
-	flag.IntVar(&m, "m", 15, "interval to average statistic (sec)")
+	flag.IntVar(&m, "m", 5, "interval to average statistic (sec)")
 }
 
 func main() {
 	flag.Parse()
 
-	conn, err := grpc.Dial(port, grpc.WithInsecure())
+	conn, err := grpc.Dial(port, grpc.WithInsecure()) //nolint:staticcheck
 	if err != nil {
 		log.Fatalf("can't connect with server %v", err)
 	}
@@ -37,18 +37,20 @@ func main() {
 		log.Fatalf("open stream error: %s", err)
 	}
 
-	done := make(chan bool)
+	done := make(chan struct{})
 
 	go func() {
-		resp, err := stream.Recv()
-		if err == io.EOF {
-			done <- true
-			return
+		for {
+			resp, err := stream.Recv()
+			if err == io.EOF {
+				close(done)
+				return
+			}
+			if err != nil {
+				log.Fatalf("cannot receive %v", err)
+			}
+			log.Printf("Resp received: %s", resp.Result)
 		}
-		if err != nil {
-			log.Fatalf("cannot receive %v", err)
-		}
-		log.Printf("Resp received: %s", resp.Result)
 	}()
 
 	<-done

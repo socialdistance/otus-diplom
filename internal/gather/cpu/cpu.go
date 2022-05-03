@@ -11,12 +11,12 @@ import (
 // #include <mach/host_info.h>
 import "C"
 
-func Get() (*Stats, error) {
-	return collectCPUStats()
+type Stats struct {
+	User, System, Idle float64
 }
 
-type Stats struct {
-	User, System, Idle int
+func Get() (*Stats, error) {
+	return collectCPUStats()
 }
 
 func collectCPUStats() (*Stats, error) {
@@ -43,8 +43,8 @@ func collectCPUStats() (*Stats, error) {
 	}
 
 	return &Stats{
-		User:   user,
-		System: system,
-		Idle:   idle,
+		User:   float64(user),
+		System: float64(system),
+		Idle:   float64(idle),
 	}, nil
 }

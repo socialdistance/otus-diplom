@@ -1,17 +1,13 @@
 package app
 
-import (
-	"bufio"
-	"bytes"
-	"fmt"
-	"testing"
-)
-
-func TestRun(t *testing.T) {
-	out := bufio.NewWriter(new(bytes.Buffer))
-	errs := Run(nil, out)
-	if errs != nil {
-		t.Errorf("error occured: %v", errs)
-	}
-	fmt.Println(errs)
-}
+// func TestRun(t *testing.T) {
+//	n := 5
+//	m := 15
+//	ctx := context.Background()
+//
+//	errs := Run(ctx, int64(n)n int64(m), config)
+//	if errs != nil {
+//		t.Errorf("error occured: %v", errs)
+//	}
+//	fmt.Println(errs)
+// }

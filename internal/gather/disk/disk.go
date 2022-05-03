@@ -9,7 +9,7 @@ import (
 
 type Stats struct {
 	Kb  float64
-	Tps int
+	Tps float64
 	Mb  float64
 }
 
@@ -26,7 +26,7 @@ func Get() (*Stats, error) {
 		return nil, err
 	}
 
-	tp, err := strconv.Atoi(res[14])
+	tp, err := strconv.ParseFloat(res[14], 64)
 	if err != nil {
 		return nil, err
 	}
@@ -39,7 +39,7 @@ func Get() (*Stats, error) {
 	return collectDiskUsage(kb, tp, mb)
 }
 
-func collectDiskUsage(kb float64, tp int, mb float64) (*Stats, error) {
+func collectDiskUsage(kb float64, tp float64, mb float64) (*Stats, error) {
 	return &Stats{
 		Kb:  kb,
 		Tps: tp,

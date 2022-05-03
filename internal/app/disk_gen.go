@@ -4,21 +4,17 @@ import (
 	disk "static_collector/internal/gather/disk"
 )
 
-type diskGenerator struct {
-	disks *disk.Stats
-	err   error
-}
+type diskGenerator struct{}
 
-func (gen *diskGenerator) Get() {
-	gen.disks, gen.err = disk.Get()
-}
+func (gen *diskGenerator) Get() (metric, error) {
+	disks, err := disk.Get()
 
-func (gen *diskGenerator) Error() error {
-	return gen.err
-}
-
-func (gen *diskGenerator) Print(out chan<- value) {
-	out <- value{"disk kb", gen.disks.Kb, "-"}
-	out <- value{"disk tps", gen.disks.Tps, "-"}
-	out <- value{"disk mb", gen.disks.Mb, "-"}
+	return metric{
+		Name: "disk",
+		values: []Value{
+			{"disk kb", disks.Kb, "-"},
+			{"disk tps", disks.Tps, "-"},
+			{"disk mb", disks.Mb, "-"},
+		},
+	}, err
 }

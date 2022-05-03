@@ -3,9 +3,10 @@ package main
 import (
 	"context"
 	"flag"
+	"fmt"
 	"log"
-	"os"
 	"os/signal"
+	internalconfig "static_collector/internal/config"
 	internalgrpc "static_collector/internal/server/grpc"
 	"syscall"
 )
@@ -21,15 +22,15 @@ func init() {
 func main() {
 	flag.Parse()
 
-	//config, err := internalconfig.LoadConfig(configFile)
-	//if err != nil {
-	//	log.Fatalf("Failed load config %s", err)
-	//}
+	config, err := internalconfig.LoadConfig(configFile)
+	if err != nil {
+		log.Fatalf("Failed load config %s", err)
+	}
 
-	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGKILL, syscall.SIGINT, syscall.SIGTERM, syscall.SIGHUP)
+	ctx, cancel := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
 	defer cancel()
 
-	grpc := internalgrpc.NewServer(port)
+	grpc := internalgrpc.NewServer(port, *config)
 
 	go func() {
 		if err := grpc.Start(); err != nil {
@@ -37,10 +38,9 @@ func main() {
 		}
 	}()
 
-	go func() {
-		<-ctx.Done()
-		grpc.Stop()
-	}()
-
 	<-ctx.Done()
+	fmt.Println("Graceful shutdown")
+	grpc.Stop()
+	fmt.Println("Graceful shutdown contex")
+
 }

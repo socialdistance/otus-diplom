@@ -17,9 +17,9 @@ func (gen *networkGenerator) Error() error {
 	return gen.err
 }
 
-func (gen *networkGenerator) Print(out chan<- value) {
+func (gen *networkGenerator) Print(out chan<- Value) {
 	for _, network := range gen.network {
-		out <- value{
+		out <- Value{
 			"network." + network.Protocol + " " + network.RecvQ + " " + network.SendQ + " " + network.Local + " " + network.Foreign, network.State, "bytes"}
 	}
 }

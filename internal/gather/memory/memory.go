@@ -7,9 +7,10 @@ import (
 )
 
 type Stats struct {
-	Total, Used, Free uint64
+	Total, Used, Free float64
 }
 
+// Get TODO: done this
 func Get() (*Stats, error) {
 	ret, err := unix.SysctlRaw("vm.swapusage")
 	if err != nil {
