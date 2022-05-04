@@ -82,7 +82,7 @@ func gatherResult(ctx context.Context, mapSlice map[string][]metric, n, m int64,
 func gatherGenerators(ctx context.Context, mutex *sync.Mutex, config config.Config) map[string][]metric {
 	mapSlice := make(map[string][]metric)
 
-	generators := InitGenerator(config)
+	generators := InitGenerator(config) //nolint:typecheck
 
 	for _, gen := range generators {
 		ticker := time.NewTicker(time.Second * 1)
