@@ -6,13 +6,16 @@ import (
 	"fmt"
 	"log"
 	"os/signal"
-	internalconfig "static_collector/internal/config"
-	internalgrpc "static_collector/internal/server/grpc"
 	"syscall"
+
+	internalconfig "static_collector/internal/config"    //nolint:gci
+	internalgrpc "static_collector/internal/server/grpc" //nolint:gci
 )
 
-var configFile string
-var port string
+var (
+	configFile string
+	port       string
+)
 
 func init() {
 	flag.StringVar(&configFile, "config", "./configs/config.yaml", "Path to configuration file")
@@ -42,5 +45,4 @@ func main() {
 	fmt.Println("Graceful shutdown")
 	grpc.Stop()
 	fmt.Println("Graceful shutdown contex")
-
 }

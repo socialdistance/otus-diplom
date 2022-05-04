@@ -1,7 +1,7 @@
 package app
 
 import (
-	average "static_collector/internal/gather/average"
+	"static_collector/internal/gather/average"
 )
 
 type loadavgGenerator struct{}
@@ -14,6 +14,7 @@ func (gen *loadavgGenerator) Get() (metric, error) {
 		values: []Value{
 			{"loadavg.1m", loadavg.Loadavg1, "-"},
 			{"loadavg.5m", loadavg.Loadavg5, "-"},
-			{"loadavg.15m", loadavg.Loadavg15, "-"}},
+			{"loadavg.15m", loadavg.Loadavg15, "-"},
+		},
 	}, err
 }

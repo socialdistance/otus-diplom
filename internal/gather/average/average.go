@@ -2,8 +2,9 @@ package average
 
 import (
 	"fmt"
-	"golang.org/x/sys/unix"
 	"unsafe"
+
+	"golang.org/x/sys/unix"
 )
 
 type Stats struct {

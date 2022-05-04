@@ -7,10 +7,6 @@ import (
 	"strings"
 )
 
-// #include <mach/mach_host.h>
-// #include <mach/host_info.h>
-import "C"
-
 type Stats struct {
 	User, System, Idle float64
 }

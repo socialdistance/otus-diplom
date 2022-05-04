@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"static_collector/internal/config"
+	"static_collector/internal/config" // nolint:gci
 	"sync"
 	"time"
 )
@@ -16,7 +16,7 @@ type generator interface {
 type Value struct {
 	Name  string
 	Value interface{}
-	unit  string
+	unit  string //nolint:structcheck
 }
 
 type metric struct {

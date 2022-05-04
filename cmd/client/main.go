@@ -3,14 +3,17 @@ package main
 import (
 	"context"
 	"flag"
-	"google.golang.org/grpc"
 	"io"
 	"log"
-	internalgrpc "static_collector/internal/server/grpc"
+	internalgrpc "static_collector/internal/server/grpc" //nolint:gci
+
+	"google.golang.org/grpc"
 )
 
-var port string
-var n, m int
+var (
+	port string
+	n, m int
+)
 
 func init() {
 	flag.StringVar(&port, "port", ":50051", "Listen port")
@@ -42,18 +45,20 @@ func main() {
 	go func() {
 		for {
 			resp, err := stream.Recv()
-			if err == io.EOF {
+			if err == io.EOF { //nolint:errorlint
 				close(done)
 				return
 			}
 			if err != nil {
 				log.Fatalf("cannot receive %v", err)
 			}
-			log.Printf("Resp received: %s", resp.Result)
+
+			for _, t := range resp.Result {
+				log.Printf("Resp received: %s", t)
+			}
 		}
 	}()
 
 	<-done
 	log.Printf("finished")
-
 }

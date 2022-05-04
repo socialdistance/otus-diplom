@@ -4,12 +4,12 @@ package grpc
 
 import (
 	"fmt"
-	"google.golang.org/grpc"
 	"log"
 	"net"
+	"static_collector/internal/app" // nolint:gci
 	"static_collector/internal/config"
 
-	internalapp "static_collector/internal/app"
+	"google.golang.org/grpc"
 )
 
 type Server struct {
@@ -49,7 +49,7 @@ func (s *Server) Stop() {
 func (s *Server) ListGather(req *GatherRequest, stream StreamService_ListGatherServer) error {
 	log.Printf("Start gather resources for n = %d and m = %d", req.N, req.M)
 
-	values := internalapp.Run(stream.Context(), req.N, req.M, s.config)
+	values := app.Run(stream.Context(), req.N, req.M, s.config)
 	for tick := range values {
 		sender(tick, req.M, stream)
 	}
@@ -57,11 +57,11 @@ func (s *Server) ListGather(req *GatherRequest, stream StreamService_ListGatherS
 	return nil
 }
 
-func sender(tick map[string][][]internalapp.Value, m int64, stream StreamService_ListGatherServer) {
+func sender(tick map[string][][]app.Value, m int64, stream StreamService_ListGatherServer) {
 	for key, value := range tick {
 		keyCount := len(value[0])
 		resp := GatherResponse{Result: make([]string, 0)}
-		tmpRes := internalapp.CalculateRes(keyCount, value, key, m)
+		tmpRes := app.CalculateRes(keyCount, value, key, m)
 		resp.Result = tmpRes
 		if err := stream.Send(&resp); err != nil {
 			log.Printf("send error %v", err)
