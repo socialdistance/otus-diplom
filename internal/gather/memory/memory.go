@@ -16,7 +16,7 @@ type loadStats struct {
 }
 
 func Get() (*Stats, error) {
-	ret, err := unix.SysctlRaw("vm.swapusage") //nolint:typecheck
+	ret, err := unix.SysctlRaw("vm.swapusage")
 	if err != nil {
 		return nil, fmt.Errorf("failed in sysctl vm.swapusage: %w", err)
 	}

@@ -1,18 +1,18 @@
 package disk
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/require"
 )
 
 func TestGetDisk(t *testing.T) {
-	res, err := Get()
-	if err != nil {
-		t.Fatal(err)
-	}
+	t.Run("disk test", func(t *testing.T) {
+		res, err := Get()
+		require.Nil(t, err)
 
-	fmt.Println(res)
-	require.Nil(t, err)
+		if res.Tps <= 0 || res.Mb <= 0 || res.Kb <= 0 {
+			t.Errorf("invalid disk value: %+v", res)
+		}
+	})
 }

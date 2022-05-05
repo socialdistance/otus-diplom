@@ -6,20 +6,20 @@ import (
 
 var generators []generator
 
-func InitGenerator(config config.Config) []generator {
-	if config.Stats.LoadAvg {
+func InitGenerator(config config.StatsConfig) []generator {
+	if config.LoadAvg {
 		generators = append(generators, &loadavgGenerator{})
 	}
 
-	if config.Stats.CPU {
+	if config.CPU {
 		generators = append(generators, &cpuGenerator{})
 	}
 
-	if config.Stats.Disk {
+	if config.Disk {
 		generators = append(generators, &diskGenerator{})
 	}
 
-	if config.Stats.Memory {
+	if config.Memory {
 		generators = append(generators, &memoryGenerator{})
 	}
 	// generators = []generator{

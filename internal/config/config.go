@@ -7,24 +7,20 @@ import (
 	yaml3 "gopkg.in/yaml.v3"
 )
 
-type Config struct {
-	Stats StatsConfig
-}
-
 type StatsConfig struct {
 	LoadAvg bool
 	CPU     bool
 	Disk    bool
 	Memory  bool
-	// NetTop  bool
-	// NetStat bool
+	NetTop  bool
+	NetStat bool
 }
 
-func NewConfig() Config {
-	return Config{}
+func NewConfig() StatsConfig {
+	return StatsConfig{}
 }
 
-func LoadConfig(path string) (*Config, error) {
+func LoadConfig(path string) (*StatsConfig, error) {
 	result, err := os.ReadFile(path)
 	if err != nil {
 		return nil, fmt.Errorf("can't parse config: %w", err)

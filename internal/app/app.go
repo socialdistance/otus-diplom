@@ -24,7 +24,7 @@ type metric struct {
 	values []Value
 }
 
-func Run(ctx context.Context, n, m int64, config config.Config) chan map[string][][]Value {
+func Run(ctx context.Context, n, m int64, config config.StatsConfig) chan map[string][][]Value {
 	var mutex sync.Mutex
 
 	mapSlice := gatherGenerators(ctx, &mutex, config)
@@ -79,10 +79,10 @@ func gatherResult(ctx context.Context, mapSlice map[string][]metric, n, m int64,
 	return result
 }
 
-func gatherGenerators(ctx context.Context, mutex *sync.Mutex, config config.Config) map[string][]metric {
+func gatherGenerators(ctx context.Context, mutex *sync.Mutex, config config.StatsConfig) map[string][]metric {
 	mapSlice := make(map[string][]metric)
 
-	generators := InitGenerator(config) //nolint:typecheck
+	generators := InitGenerator(config)
 
 	for _, gen := range generators {
 		ticker := time.NewTicker(time.Second * 1)

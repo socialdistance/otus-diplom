@@ -1,18 +1,15 @@
 package config
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/require"
 )
 
 func TestLoad(t *testing.T) {
-	res, err := LoadConfig("./configs/config.yaml")
-	if err != nil {
-		t.Fatal(err)
-	}
+	t.Run("invalid config test", func(t *testing.T) {
+		_, err := LoadConfig("/tmp/bar.foo")
 
-	fmt.Println(res)
-	require.Nil(t, err)
+		require.Error(t, err)
+	})
 }

@@ -2,15 +2,17 @@ package cpu
 
 import (
 	"testing"
+
+	"github.com/stretchr/testify/require"
 )
 
 func TestGetCPU(t *testing.T) {
-	cpu, err := Get()
-	if err != nil {
-		t.Fatalf("error should be nil but got: %v", err)
-	}
-	if cpu.User <= 0 || cpu.System <= 0 || cpu.Idle <= 0 {
-		t.Errorf("invalid cpu value: %+v", cpu)
-	}
-	t.Logf("cpu value: %+v", cpu)
+	t.Run("cpu test", func(t *testing.T) {
+		cpu, err := Get()
+		require.Nil(t, err)
+
+		if cpu.User <= 0 || cpu.System <= 0 || cpu.Idle <= 0 {
+			t.Errorf("invalid cpu value: %+v", cpu)
+		}
+	})
 }

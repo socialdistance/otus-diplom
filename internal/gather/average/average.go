@@ -17,7 +17,7 @@ type loadStruct struct {
 }
 
 func Get() (*Stats, error) {
-	res, err := unix.SysctlRaw("vm.loadavg") //nolint:typecheck
+	res, err := unix.SysctlRaw("vm.loadavg")
 	if err != nil {
 		return nil, fmt.Errorf("failed in sysctl vm.loadavg: %w", err)
 	}
