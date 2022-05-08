@@ -9,7 +9,7 @@ import (
 
 func TestGenerator(t *testing.T) {
 	t.Run("empty test", func(t *testing.T) {
-		emptyConfig := config.StatsConfig{
+		emptyConfig := config.Stats{
 			LoadAvg: false,
 			CPU:     false,
 			Disk:    false,
@@ -23,7 +23,7 @@ func TestGenerator(t *testing.T) {
 	})
 
 	t.Run("test with config", func(t *testing.T) {
-		config := config.StatsConfig{
+		config := config.Stats{
 			LoadAvg: true,
 			CPU:     true,
 			Disk:    true,

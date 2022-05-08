@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"runtime"
 	"static_collector/internal/config" // nolint:gci
 	"sync"
 	"time"
@@ -12,6 +13,10 @@ import (
 type generator interface {
 	Get() (metric, error)
 }
+
+// type generatorLinux interface {
+//	GetLinux() (metric, error)
+// }
 
 type Value struct {
 	Name  string
@@ -24,7 +29,7 @@ type metric struct {
 	values []Value
 }
 
-func Run(ctx context.Context, n, m int64, config config.StatsConfig) chan map[string][][]Value {
+func Run(ctx context.Context, n, m int64, config config.Stats) chan map[string][][]Value {
 	var mutex sync.Mutex
 
 	mapSlice := gatherGenerators(ctx, &mutex, config)
@@ -79,10 +84,16 @@ func gatherResult(ctx context.Context, mapSlice map[string][]metric, n, m int64,
 	return result
 }
 
-func gatherGenerators(ctx context.Context, mutex *sync.Mutex, config config.StatsConfig) map[string][]metric {
+func gatherGenerators(ctx context.Context, mutex *sync.Mutex, config config.Stats) map[string][]metric {
+	var generators []generator
 	mapSlice := make(map[string][]metric)
 
-	generators := InitGenerator(config)
+	switch runtime.GOOS {
+	case "darwin":
+		generators = InitGenerator(config)
+	case "linux":
+		generators = InitGeneratorLinux(config)
+	}
 
 	for _, gen := range generators {
 		ticker := time.NewTicker(time.Second * 1)

@@ -16,10 +16,10 @@ type Server struct {
 	UnimplementedStreamServiceServer
 	port       string
 	grpcServer *grpc.Server
-	config     config.StatsConfig
+	config     config.Stats
 }
 
-func NewServer(port string, config config.StatsConfig) *Server {
+func NewServer(port string, config config.Stats) *Server {
 	server := &Server{
 		port:       port,
 		grpcServer: grpc.NewServer(),

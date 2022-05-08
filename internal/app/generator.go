@@ -4,9 +4,9 @@ import (
 	"static_collector/internal/config"
 )
 
-var generators []generator
+var generators, generatorsLinux []generator
 
-func InitGenerator(config config.StatsConfig) []generator {
+func InitGenerator(config config.Stats) []generator {
 	if config.LoadAvg {
 		generators = append(generators, &loadavgGenerator{})
 	}
@@ -22,6 +22,7 @@ func InitGenerator(config config.StatsConfig) []generator {
 	if config.Memory {
 		generators = append(generators, &memoryGenerator{})
 	}
+
 	// generators = []generator{
 	// &loadavgGenerator{},
 	// &cpuGenerator{},
@@ -32,4 +33,12 @@ func InitGenerator(config config.StatsConfig) []generator {
 	// }
 
 	return generators
+}
+
+func InitGeneratorLinux(config config.Stats) []generator {
+	if config.LoadAvg {
+		generatorsLinux = append(generatorsLinux, &loadavgLinuxGenerator{})
+	}
+
+	return generatorsLinux
 }

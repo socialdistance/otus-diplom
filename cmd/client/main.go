@@ -5,7 +5,9 @@ import (
 	"flag"
 	"io"
 	"log"
+	"os/signal"
 	internalgrpc "static_collector/internal/server/grpc" //nolint:gci
+	"syscall"
 
 	"google.golang.org/grpc"
 )
@@ -35,9 +37,12 @@ func main() {
 		M: int64(m),
 	}
 
+	ctx, cancel := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
+	defer cancel()
+
 	stream, err := client.ListGather(context.Background(), &in)
 	if err != nil {
-		log.Fatalf("open stream error: %s", err)
+		log.Fatalf("open stream error: %s", err) //nolint:gocritic
 	}
 
 	done := make(chan struct{})
@@ -54,11 +59,13 @@ func main() {
 			}
 
 			for _, t := range resp.Result {
-				log.Printf("Resp received: %s", t)
+				log.Println(t)
+				log.Println("-------")
 			}
 		}
 	}()
 
 	<-done
+	<-ctx.Done()
 	log.Printf("finished")
 }

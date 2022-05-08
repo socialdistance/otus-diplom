@@ -18,7 +18,7 @@ var (
 )
 
 func init() {
-	flag.StringVar(&configFile, "config", "./configs/config.yaml", "Path to configuration file")
+	flag.StringVar(&configFile, "config", "./configs/configs.yaml", "Path to configuration file")
 	flag.StringVar(&port, "port", "50051", "Listen port")
 }
 

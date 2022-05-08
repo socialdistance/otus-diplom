@@ -1,7 +1,0 @@
-stats:
-  loadavg: true
-  cpu: true
-  disk: true
-  memory: true
-  nettop: false
-  netstat: false
