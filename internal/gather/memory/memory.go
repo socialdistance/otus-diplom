@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"unsafe"
 
-	"golang.org/x/sys/unix"
+	ux "golang.org/x/sys/unix"
 )
 
 type Stats struct {
@@ -16,7 +16,7 @@ type loadStats struct {
 }
 
 func Get() (*Stats, error) {
-	ret, err := unix.SysctlRaw("vm.swapusage")
+	ret, err := ux.SysctlRaw("vm.swapusage")
 	if err != nil {
 		return nil, fmt.Errorf("failed in sysctl vm.swapusage: %w", err)
 	}
