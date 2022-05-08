@@ -14,10 +14,6 @@ type generator interface {
 	Get() (metric, error)
 }
 
-// type generatorLinux interface {
-//	GetLinux() (metric, error)
-// }
-
 type Value struct {
 	Name  string
 	Value interface{}

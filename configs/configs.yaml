@@ -1,6 +1,5 @@
 loadavg: true
 cpu: true
 disk: true
-memory: false
 nettop: false
 netstat: false

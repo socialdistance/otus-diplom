@@ -6,6 +6,8 @@ import (
 
 type loadavgGenerator struct{}
 
+type loadavgLinuxGenerator struct{}
+
 func (gen *loadavgGenerator) Get() (metric, error) {
 	loadavg, err := average.Get()
 
@@ -18,8 +20,6 @@ func (gen *loadavgGenerator) Get() (metric, error) {
 		},
 	}, err
 }
-
-type loadavgLinuxGenerator struct{}
 
 func (gen *loadavgLinuxGenerator) Get() (metric, error) {
 	loadavg, err := average.Get()

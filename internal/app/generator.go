@@ -19,15 +19,10 @@ func InitGenerator(config config.Stats) []generator {
 		generators = append(generators, &diskGenerator{})
 	}
 
-	if config.Memory {
-		generators = append(generators, &memoryGenerator{})
-	}
-
 	// generators = []generator{
 	// &loadavgGenerator{},
 	// &cpuGenerator{},
 	// &diskGenerator{},
-	// &memoryGenerator{},
 	// &networkGenerator{},
 	// &talkersGenerator{},
 	// }
@@ -38,6 +33,10 @@ func InitGenerator(config config.Stats) []generator {
 func InitGeneratorLinux(config config.Stats) []generator {
 	if config.LoadAvg {
 		generatorsLinux = append(generatorsLinux, &loadavgLinuxGenerator{})
+	}
+
+	if config.CPU {
+		generatorsLinux = append(generatorsLinux, &cpuLinuxGenerator{})
 	}
 
 	return generatorsLinux
