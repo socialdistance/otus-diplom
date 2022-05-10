@@ -12,6 +12,15 @@ import (
 	"strings"
 )
 
+type StatsLinux struct {
+	User, System, Idle float64
+}
+
+type cpuStat struct {
+	name string
+	ptr  *float64
+}
+
 func Get() (*StatsLinux, error) {
 	file, err := os.Open("/proc/stat")
 	if err != nil {
@@ -20,15 +29,6 @@ func Get() (*StatsLinux, error) {
 	defer file.Close()
 
 	return collectCPULinuxStats(file)
-}
-
-type StatsLinux struct {
-	User, System, Idle float64
-}
-
-type cpuStat struct {
-	name string
-	ptr  *float64
 }
 
 func collectCPULinuxStats(out io.Reader) (*StatsLinux, error) {

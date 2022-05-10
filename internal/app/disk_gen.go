@@ -1,7 +1,7 @@
 package app
 
 import (
-	disk "static_collector/internal/gather/disk"
+	"static_collector/internal/gather/disk"
 )
 
 type diskGenerator struct{}

@@ -2,4 +2,4 @@ loadavg: true
 cpu: true
 disk: true
 nettop: false
-netstat: false
+netstat: true

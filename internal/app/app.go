@@ -37,12 +37,20 @@ func Run(ctx context.Context, n, m int64, config config.Stats) chan map[string][
 
 func CalculateRes(keyCount int, value [][]Value, key string, m int64) []string {
 	var tmpResult []string
+	var tmpString string
+
 	for i := 0; i < keyCount; i++ {
-		metricAverage := 0.
+		metric := 0.
 		for j := 0; j < len(value); j++ {
-			metricAverage += (value[j][i].Value).(float64)
+			switch value[j][i].Value.(type) {
+			case float64:
+				metric += (value[j][i].Value).(float64) / float64(m)
+				tmpString = fmt.Sprintf("metric: %s, kind: %s - %f", key, value[0][i].Name, metric)
+			case string:
+				tmpString = fmt.Sprintf("metric: %s, kind: %s - %s", key, value[0][i].Name, value[j][i].Value)
+			}
 		}
-		tmpString := fmt.Sprintf("metric: %s, kind: %s - %f", key, value[0][i].Name, metricAverage/float64(m))
+
 		tmpResult = append(tmpResult, tmpString)
 	}
 
