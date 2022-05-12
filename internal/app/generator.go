@@ -40,7 +40,7 @@ func InitGeneratorLinux(config config.Stats) []generator {
 	}
 
 	if config.NetStat {
-		generatorsLinux = append(generatorsLinux, &networkGenerator{})
+		generatorsLinux = append(generatorsLinux, &networkLinuxGenerator{})
 	}
 
 	return generatorsLinux

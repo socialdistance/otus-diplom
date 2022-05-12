@@ -2,9 +2,9 @@ package app
 
 import "static_collector/internal/gather/network"
 
-type networkGenerator struct{}
+type networkLinuxGenerator struct{}
 
-func (gen *networkGenerator) Get() (metric, error) {
+func (gen *networkLinuxGenerator) Get() (metric, error) {
 	network, err := network.Get()
 
 	return metric{
