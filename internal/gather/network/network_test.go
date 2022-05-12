@@ -10,6 +10,7 @@ import (
 )
 
 func TestGetNetworks(t *testing.T) {
-	res, err := Get()
+	_, err := Get()
 	require.Nil(t, err)
+	require.NoError(t, err)
 }

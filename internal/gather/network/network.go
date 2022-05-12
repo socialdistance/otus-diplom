@@ -21,7 +21,13 @@ func Get() (*Stats, error) {
 		return nil, err
 	}
 
+	// TODO: add if not connections
+
 	res := strings.Fields(string(cmd))
+
+	if len(res) <= 15 {
+		return nil, err
+	}
 
 	recvq, err := strconv.ParseFloat(res[16], 64)
 	if err != nil {

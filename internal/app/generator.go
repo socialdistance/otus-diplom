@@ -19,14 +19,6 @@ func InitGenerator(config config.Stats) []generator {
 		generators = append(generators, &diskGenerator{})
 	}
 
-	// generators = []generator{
-	// &loadavgGenerator{},
-	// &cpuGenerator{},
-	// &diskGenerator{},
-	// &networkGenerator{},
-	// &talkersGenerator{},
-	// }
-
 	return generators
 }
 
