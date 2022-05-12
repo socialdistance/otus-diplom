@@ -4,7 +4,6 @@
 package network
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -12,7 +11,6 @@ import (
 
 func TestGetNetworks(t *testing.T) {
 	res, err := Get()
-
-	fmt.Println(res)
+	require.NoError(t, res)
 	require.Nil(t, err)
 }
