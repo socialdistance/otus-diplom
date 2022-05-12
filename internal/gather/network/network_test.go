@@ -11,6 +11,5 @@ import (
 
 func TestGetNetworks(t *testing.T) {
 	res, err := Get()
-	require.NoError(t, res)
 	require.Nil(t, err)
 }
